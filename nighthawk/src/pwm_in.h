@@ -18,6 +18,8 @@
 #define ROLL_INDEX   1
 #define PITCH_INDEX  2
 #define YAW_INDEX    3
+#define AUX0_INDEX   4
+#define AUX1_INDEX   5
 
 typedef struct
 {
@@ -27,7 +29,7 @@ typedef struct
 	uint16_t capture;
 }input_channels;
 
-extern input_channels input[4];
+extern input_channels input[6];
 
 void pwm_in_init(void);
 uint16_t pwm_in_get_channel(uint8_t channel);
