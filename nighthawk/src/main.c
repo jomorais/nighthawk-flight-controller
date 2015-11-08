@@ -12,21 +12,22 @@
 #include "stm32f4xx.h"
 #include "stm32f4_discovery.h"
 #include "pwm_in.h"
+#include "pwm_out.h"
 #include "debug.h"
 			
 
 int main(void)
 {
-
-	char out[100];
-	bzero(out,sizeof(out));
 	debug_init();
 	pwm_in_init();
+	pwm_out_init();
+	char out[100];
 	for(;;)
 	{
-		Delay(1000000);
+		Delay(100000);
 		bzero(out,sizeof(out));
-		sprintf(out,"throttle: %d - roll: %d - pitch: %d - yaw: %d - aux0: %d - aux1: %d         \r", pwm_in_get_channel(THR_INDEX), pwm_in_get_channel(1), pwm_in_get_channel(2), pwm_in_get_channel(3), pwm_in_get_channel(4), pwm_in_get_channel(5));
+		sprintf(out,"throttle: %d - roll: %d - pitch: %d - yaw: %d - aux0: %d - aux1: %d         \r", pwm_in_get_channel(THR_INDEX), pwm_in_get_channel(ROLL_INDEX), pwm_in_get_channel(PITCH_INDEX), pwm_in_get_channel(YAW_INDEX), pwm_in_get_channel(AUX0_INDEX), pwm_in_get_channel(AUX0_INDEX));
+		pwm_out_set_period(0,pwm_in_get_channel(THR_INDEX));
 		debug_write(out);
 	}
 }
