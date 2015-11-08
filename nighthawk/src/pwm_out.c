@@ -90,8 +90,8 @@ void pwm_out_interrupts_init(void)
 void pwm_out_init(void)
 {
 	pwm_out_gpio_init();
-	pwm_out_interrupts_init();
 	pwm_out_timer_init();
+	pwm_out_interrupts_init();
 	int channel;
 	for(channel = 0; channel < 4; channel++)
 		out_channels[channel].period = 990;

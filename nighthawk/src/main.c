@@ -26,7 +26,7 @@ int main(void)
 	{
 		Delay(100000);
 		bzero(out,sizeof(out));
-		sprintf(out,"throttle: %d - roll: %d - pitch: %d - yaw: %d - aux0: %d - aux1: %d         \r", pwm_in_get_channel(THR_INDEX), pwm_in_get_channel(ROLL_INDEX), pwm_in_get_channel(PITCH_INDEX), pwm_in_get_channel(YAW_INDEX), pwm_in_get_channel(AUX0_INDEX), pwm_in_get_channel(AUX0_INDEX));
+		sprintf(out,"throttle: %d - roll: %d - pitch: %d - yaw: %d - aux0: %d - aux1: %d         \r", pwm_in_get_channel(THR_INDEX), pwm_in_get_channel(ROLL_INDEX), pwm_in_get_channel(PITCH_INDEX), pwm_in_get_channel(YAW_INDEX), pwm_in_get_channel(AUX0_INDEX), pwm_in_get_channel(AUX1_INDEX));
 		pwm_out_set_period(0,pwm_in_get_channel(THR_INDEX));
 		debug_write(out);
 	}
