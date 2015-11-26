@@ -15,8 +15,8 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_usart.h"
 
-void Delay(__IO uint32_t nCount);
-void debug_init(void);
-void debug_write(volatile char *info);
+void Delay ( __IO uint32_t nCount );
+void debug_init ( void );
+void debug_write ( volatile char *info );
 
 #endif /* DEBUG_H_ */

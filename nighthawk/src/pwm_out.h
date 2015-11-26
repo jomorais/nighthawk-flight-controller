@@ -20,13 +20,12 @@
 
 typedef struct
 {
-	uint16_t period;
-}out_channels_t;
+		uint16_t period;
+} out_channels_t;
 
 out_channels_t out_channels[4];
 
-void pwm_out_init(void);
-void pwm_out_set_period(uint8_t channel ,uint16_t period);
-
+void pwm_out_init ( void );
+void pwm_out_set_period ( uint8_t channel , uint16_t period );
 
 #endif /* PWM_OUT_H_ */
