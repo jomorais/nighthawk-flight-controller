@@ -119,19 +119,19 @@ void mpu6050_set_gains ( uint8_t gyro , uint8_t accel )
 				case 1 :
 				{
 						calibration.acc_scale_factor = (float) 4 * GRAVITY * 0.0305; // each data is of 16 bits that means, 2g is divided along 2^(15)-1 = 32767 so for milli m/s^2 0.0305 = 1000/32767
-						accel_gain = 0b00000000;
+						accel_gain = 0b00001000;
 				}
 						break;
 				case 2 :
 				{
 						calibration.acc_scale_factor = (float) 8 * GRAVITY * 0.0305; // each data is of 16 bits that means, 2g is divided along 2^(15)-1 = 32767 so for milli m/s^2 0.0305 = 1000/32767
-						accel_gain = 0b00000000;
+						accel_gain = 0b00010000;
 				}
 						break;
 				case 3 :
 				{
 						calibration.acc_scale_factor = (float) 16 * GRAVITY * 0.0305; // each data is of 16 bits that means, 2g is divided along 2^(15)-1 = 32767 so for milli m/s^2 0.0305 = 1000/32767
-						accel_gain = 0b00000000;
+						accel_gain = 0b00011000;
 				}
 						break;
 				default :
@@ -184,7 +184,7 @@ int8_t mpu6050_init ( void )
 		/* module reset */
 		mpu6050_reset();
 		/* set gains and scale factor */
-		mpu6050_set_gains( 0 , 0 );
+		mpu6050_set_gains( 0 , 1 );
 		/* set filter configuration */
 		mpu6050_set_dlpf( 0 );
 		/* make offset calibration */
