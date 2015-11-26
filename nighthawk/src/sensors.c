@@ -244,13 +244,13 @@ void mpu6050_read_acc_gyro ( void )
 
 void mpu6050_apply_calibration_correction ( void )
 {
-		sensor_data.AX = (float) ( sensor_data_raw.AX - calibration.AX_offset );// * ( calibration.acc_scale_factor / 1000 );
-		sensor_data.AY = (float) ( sensor_data_raw.AY - calibration.AY_offset );// * ( calibration.acc_scale_factor / 1000 );
-		sensor_data.AZ = (float) ( sensor_data_raw.AZ - calibration.AZ_offset );// * ( calibration.acc_scale_factor / 1000 );
+		sensor_data.AX = (float) ( sensor_data_raw.AX - calibration.AX_offset ) * ( calibration.acc_scale_factor / 1000 );
+		sensor_data.AY = (float) ( sensor_data_raw.AY - calibration.AY_offset ) * ( calibration.acc_scale_factor / 1000 );
+		sensor_data.AZ = (float) ( sensor_data_raw.AZ - calibration.AZ_offset ) * ( calibration.acc_scale_factor / 1000 );
 
-		sensor_data.GX = (float) ( sensor_data_raw.GX - calibration.GX_offset );// * ( calibration.gyro_scale_factor / 1000 );
-		sensor_data.GY = (float) ( sensor_data_raw.GY - calibration.GY_offset );// * ( calibration.gyro_scale_factor / 1000 );
-		sensor_data.GZ = (float) ( sensor_data_raw.GZ - calibration.GZ_offset );// * ( calibration.gyro_scale_factor / 1000 );
+		sensor_data.GX = (float) ( sensor_data_raw.GX - calibration.GX_offset ) * ( calibration.gyro_scale_factor / 1000 );
+		sensor_data.GY = (float) ( sensor_data_raw.GY - calibration.GY_offset ) * ( calibration.gyro_scale_factor / 1000 );
+		sensor_data.GZ = (float) ( sensor_data_raw.GZ - calibration.GZ_offset ) * ( calibration.gyro_scale_factor / 1000 );
 }
 
 void mpu6050_calibration_proccess ( void )
