@@ -10,39 +10,53 @@
 void orientation_init ( void )
 {
 		sensors_init();
-		quaternion.q0 = 1.0;
-		quaternion.q1 = 0.0;
-		quaternion.q2 = 0.0;
-		quaternion.q3 = 0.0;
 }
 
-void orientation_calc_euler_angles ( quaternion_t *q , euler_angles_t *e )
+void orientation_calc_euler_angles_360 ( void )
 {
-		e->roll = atan2f( 2 * ( q->q0 * q->q1 + q->q2 * q->q3 ) , 1 - 2 * ( q->q1 * q->q1 + q->q2 * q->q2 ) ) * 57.3;
-		e->pitch = asinf( 2 * ( q->q0 * q->q2 - q->q3 * q->q1 ) ) * 57.3;
-		e->yaw = atan2f( 2 * ( q->q0 * q->q3 + q->q1 * q->q2 ) , 1 - 2 * ( q->q2 * q->q2 + q->q3 * q->q3 ) ) * 57.3;
-}
+		float m11 , m12 , m21 , m31 , m32;
+		float gx = 0 , gy = 0 , gz = 0;
+		float temp_angles[AXIS];
 
-quaternion_t get_quaternion ( void )
-{
-		return quaternion;
-}
+		// estimated gravity direction
+		gx = 2 * ( q1 * q3 - q0 * q2 );
+		gy = 2 * ( q0 * q1 + q2 * q3 );
+		gz = q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3;
 
-euler_angles_t get_euler_angles ( void )
-{
-		return euler_angles;
+		m11 = 2. * ( q1 * q2 + q0 * q3 );
+		m12 = q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3;
+		m21 = -2. * ( q1 * q3 - q0 * q2 );
+		m31 = 2. * ( q2 * q3 + q0 * q1 );
+		m32 = q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3;
+
+		temp_angles[YAW] = -atan2( m11 , m12 ) * 57.2957795;
+		temp_angles[PITCH] = -asin( m21 ) * 57.2957795;
+		temp_angles[ROLL] = -atan2( m31 , m32 ) * 57.2957795;
+
+		if ( gx >= 0 && gz < 0 )
+				temp_angles[PITCH] = 180. - temp_angles[PITCH];
+		else
+				if ( gx < 0 && gz < 0 )
+						temp_angles[PITCH] = 180. - temp_angles[PITCH];
+				else
+						if ( gx < 0 && gz >= 0 )
+								temp_angles[PITCH] = 360. + temp_angles[PITCH];
+		if ( temp_angles[YAW] < 0 )
+				temp_angles[YAW] = 360. + temp_angles[YAW];
+		if ( temp_angles[ROLL] < 0 )
+				temp_angles[ROLL] = 360. + temp_angles[ROLL];
+
+		temp_angles[YAW] = 360 - temp_angles[YAW];
+		angles[YAW] = temp_angles[YAW];
+		angles[PITCH] = temp_angles[PITCH];
+		angles[ROLL] = temp_angles[ROLL];
+
 }
 
 void orientation_update ( float delta )
 {
 		sensors_update( delta );
+		//MadgwickAHRSupdateIMU( gyro_smooth[X] * DEG_TO_RAD , gyro_smooth[Y] * DEG_TO_RAD , gyro_smooth[Z] * DEG_TO_RAD , acc_smooth[X] , acc_smooth[Y] , acc_smooth[Z] , ( (float) delta / 1000 ) );
 
-		//MadgwickAHRSupdate(sensor_data.GX * DEG_TO_RAD, sensor_data.GY * DEG_TO_RAD, sensor_data.GZ * DEG_TO_RAD, sensor_data.AX, sensor_data.AY, sensor_data.AZ,sensor_data.MX,sensor_data.MY,sensor_data.MZ, ((float)delta / 1000000) / 2);
-
-	  //euler_angles.roll = atanf(sensor_data.AY / sqrt(sensor_data.AX * sensor_data.AX + sensor_data.AZ * sensor_data.AZ)) * RAD_TO_DEG;
-		//euler_angles.pitch = atan2f(-sensor_data.AX , sensor_data.AZ) * RAD_TO_DEG;
-		//euler_angles.yaw = sensor_data.MX;
-
-		//MadgwickAHRSupdateIMU ( sensor_data.GX * DEG_TO_RAD, sensor_data.GY * DEG_TO_RAD, sensor_data.GZ * DEG_TO_RAD, sensor_data.AX , sensor_data.AY , sensor_data.AZ, ((float)delta / 1000000) );
 }
 

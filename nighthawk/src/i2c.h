@@ -22,5 +22,6 @@ uint8_t i2c_is_device_alive ( uint8_t addr );
 void i2c_write_reg ( uint8_t addr , uint8_t reg , uint8_t data );
 uint8_t i2c_read_reg ( uint8_t addr , uint8_t reg );
 void i2c_read_buffer ( uint8_t addr , uint8_t reg , uint8_t* buffer , uint16_t size );
+void i2c_write_buffer ( uint8_t addr , uint8_t reg , uint8_t* buffer , uint16_t size );
 
 #endif /* I2C_H_ */

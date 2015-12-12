@@ -9,11 +9,14 @@
 #define UTILS_H_
 
 #include "stm32f4xx.h"
+#include "types.h"
+#include "config.h"
 #include <string.h>
 #include <math.h>
 
-#define RAD_TO_DEG 57.3
-#define DEG_TO_RAD (M_PI / 180.0)
+#define RAD_TO_DEG          57.295779513f // (180.0 / M_PI)
+#define DEG_TO_RAD          0.017453293f  // (M_PI / 180.0)
+#define GRAVITY             9.81f         // earth gravity
 
 /* return min value */
 #define _min(X,Y) ((X) < (Y) ? : (X) : (Y))

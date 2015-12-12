@@ -203,3 +203,10 @@ void i2c_read_buffer ( uint8_t addr , uint8_t reg , uint8_t* buffer , uint16_t s
 				else
 						buffer[index] = i2c_read_byte_ack();
 }
+
+void i2c_write_buffer ( uint8_t addr , uint8_t reg , uint8_t* buffer , uint16_t size )
+{
+		uint8_t index;
+		for ( index = 0; index < size ; index++ )
+				i2c_write_reg( addr , reg + index , buffer[index] );
+}
